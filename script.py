@@ -87,3 +87,27 @@ class Enemy:
         hero.health -= attack_value
         if hero.health <= 0:
             hero.is_knocked_out = True
+
+# Character Creation
+def create_character():
+    choice = ""
+    while choice != "y":
+        name = input("Please enter your characters name : ")
+        choice = input("Your characters name is {name}.  Is this correct? y/n : ".format(name=name))
+    rolls = 3
+    while rolls > 0:
+        strength = random.randint(1,10)
+        crit = random.randint(1,10)
+        print("""
+        Stregnth : {strength}
+        Crit     : {crit}
+        """.format(strength=strength, crit=crit))
+        accept = input("Do you accept? y/n ")
+        if accept == "y" or accept == "n":
+            if accept == "y":
+                print("Character created")
+                return Hero(name, strength, crit)
+            elif accept == "n":
+                rolls -= 1
+                continue
+    return Hero(name, strength, crit)
