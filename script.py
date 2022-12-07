@@ -26,7 +26,7 @@ class Hero:
 
     def attack(self, enemy):
         # Do you want a use a potion first?
-        potion = input("Do you want to use a potion? y/n ")
+        potion = input("Do you want to use a potion? y/n \n")
         if potion == "y":
             self.use_potion()
         # Checks to see if Hero is alive
@@ -35,7 +35,7 @@ class Hero:
             return
         # Check to see if your attack crits
         if self.crit > random.randint(1, 100):
-            print("You CRIT {enemy} and hit for {attack} health".format(enemy=enemy.name, attack=(self.stregth * 1.5)))
+            print("You CRIT {enemy} and hit for {attack} health".format(enemy=enemy.name, attack=(self.strength * 1.5)))
             enemy.health -= self.strength * 1.5
         else:
             attack_value = random.randint(self.strength -2, self.strength +2)
@@ -104,7 +104,7 @@ def create_character():
         Stregnth : {strength}
         Crit     : {crit}
         """.format(strength=strength, crit=crit))
-        print("You can roll " + rolls + " more times")
+        print("You can roll " + str(rolls) + " more times")
         accept = input("Do you accept? y/n ")
         if accept == "y" or accept == "n":
             if accept == "y":
@@ -131,13 +131,11 @@ while hero.is_knocked_out == False:
         if enemy.is_knocked_out == True:
             hero.potion += enemy.loot
             hero.experience += enemy.experience
-        if hero.experience % 10 == 0:
-            hero.lvl_up()
+            if hero.experience % 10 == 0:
+                hero.lvl_up()
             continue
         enemy.attack(hero)
-    
-    
-    if hero.is_knocked_out == True:
-      break
+        if hero.is_knocked_out == True:
+            break
 
 print("You have been slain!.")
