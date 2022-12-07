@@ -41,3 +41,26 @@ class Hero:
             enemy.health -= attack_value
         if enemy.health <= 0:
             enemy.is_knocked_out = True
+
+    def use_potion(self):
+        # First checks to see if you have potions
+        if self.potion > 0:
+            self.potion -= 1
+            self.health += 20
+        # Adds 20 health and ensures you don't go over your max health
+        if self.health > self.max_health:
+            self.health = self.max_health
+            print("You use a potion.  Your health is now {health}".format(health=self.health))
+        else:
+            print("You do not have any potions")
+
+    # Level up function.  This will occur when your experience is a multiple of 10
+    def lvl_up(self):
+        # Increases your stats and brings your health to max
+        self.strength += 4
+        self.crit += 5
+        # Caps your max crit at 80 percent
+        if self.crit > 80:
+            self.crit = 80
+        self.max_health += 10
+        self.health = self.max_health
