@@ -64,3 +64,26 @@ class Hero:
             self.crit = 80
         self.max_health += 10
         self.health = self.max_health
+
+class Enemy:
+  
+    def __init__(self, health, strength, name="The Boss"):
+        self.name = name
+        self.health = health
+        self.strength = strength
+        self.is_knocked_out = False
+        self.loot = random.randint(0,2)
+        self.experience = random.randint(1, 10)
+
+    def __repr__(self):
+        return """
+        {name} has {health} health remaining.
+        Strength    : {strength}
+        """.format(name=self.name, health=self.health, strength=self.strength)
+
+    def attack(self, hero):
+        attack_value = random.randint(self.strength -2, self.strength +2)
+        print("{enemy} attacks you for {attack} health".format(enemy=self.name, attack=attack_value))
+        hero.health -= attack_value
+        if hero.health <= 0:
+            hero.is_knocked_out = True
