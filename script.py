@@ -90,7 +90,7 @@ class Enemy:
         if hero.health <= 0:
             hero.is_knocked_out = True
 
-# Character Creation
+# Character Creation Function
 def create_character():
     choice = ""
     while choice != "y":
@@ -115,13 +115,17 @@ def create_character():
                 continue
     return Hero(name, strength, crit)
 
+# Enemy Creation Function
 def create_enemy():
     health = hero.max_health * 1.5
-    strength = random.randint(hero.strength -2, hero.strength +2)
+    strength = random.randint(hero.strength -3, hero.strength +3)
     return Enemy(health, strength)
 
+# Create a hero to start the game
 hero = create_character()
 
+# The battle starts here
+# This loop continues as long as the hero is alive
 while hero.is_knocked_out == False:
     enemy = create_enemy()
     while enemy.is_knocked_out == False:
