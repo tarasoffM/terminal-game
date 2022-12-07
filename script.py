@@ -1,3 +1,5 @@
+import random
+
 class Hero:
   # To create a hero give him/her a name.  You get 3 rolls to accept the base attributes.  
   # If you don't pick the first or second, then the third roll is automatically assigned to your character.
@@ -94,14 +96,15 @@ def create_character():
     while choice != "y":
         name = input("Please enter your characters name : ")
         choice = input("Your characters name is {name}.  Is this correct? y/n : ".format(name=name))
-    rolls = 3
-    while rolls > 0:
+    rolls = 2
+    while rolls > -1:
         strength = random.randint(1,10)
         crit = random.randint(1,10)
         print("""
         Stregnth : {strength}
         Crit     : {crit}
         """.format(strength=strength, crit=crit))
+        print("You can roll " + rolls + " more times")
         accept = input("Do you accept? y/n ")
         if accept == "y" or accept == "n":
             if accept == "y":
@@ -111,3 +114,30 @@ def create_character():
                 rolls -= 1
                 continue
     return Hero(name, strength, crit)
+
+def create_enemy():
+    health = hero.max_health * 1.5
+    strength = random.randint(hero.strength -2, hero.strength +2)
+    return Enemy(health, strength)
+
+hero = create_character()
+
+while hero.is_knocked_out == False:
+    enemy = create_enemy()
+    while enemy.is_knocked_out == False:
+        print(enemy)
+        print(hero)
+        hero.attack(enemy)
+        if enemy.is_knocked_out == True:
+            hero.potion += enemy.loot
+            hero.experience += enemy.experience
+        if hero.experience % 10 == 0:
+            hero.lvl_up()
+            continue
+        enemy.attack(hero)
+    
+    
+    if hero.is_knocked_out == True:
+      break
+
+print("You have been slain!.")
